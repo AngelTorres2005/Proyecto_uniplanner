@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniPlanner - Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/estilos.css">
+    <link rel="icon" type="image/png" href="/img/isotipo.png">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body class="vh-100 d-flex align-items-center justify-content-center bg-light">
+    <div class="position-absolute top-0 end-0 p-4" style="z-index: 1050;">
+        <button id="btn-modo-oscuro" class="btn btn-icon border-0 bg-transparent text-secondary fs-4"
+            onclick="cambiarTema()">
+            <i class="bi bi-moon-stars-fill"></i>
+        </button>
+    </div>
+    <div class="card-login p-4 w-100 d-flex flex-column justify-content-center"
+        style="max-width: 450px; min-height: 480px;">
+
+        <div id="contenido-login">
+            <div class="text-center mb-4">
+                <img src="/img/imagotipo.png" alt="UniPlanner Logo" class="img-fluid d-block mx-auto mb-2"
+                    style="max-height: 60px;">
+                <p class="text-secondary small">Facultad de Ingeniería Mecánica y Eléctrica</p>
+            </div>
+
+            <form action="/api/login" method="POST">
+                <div class="mb-3">
+                    <label class="small text-secondary">Correo Electrónico</label>
+                    <input type="email" class="form-control border-secondary" required
+                        placeholder="ejemplo@uanl.edu.mx" name="email">
+                </div>
+                <div class="mb-4">
+                    <label class="small text-secondary">Contraseña</label>
+                    <input type="password" class="form-control border-secondary" required placeholder="••••••••" name="password">
+                </div>
+                <button type="submit" class="btn btn-primary w-100 rounded-pill fw-bold py-2">Acceder</button>
+            </form>
+
+            <div class="text-center mt-4">
+                <span class="small text-secondary">¿No tienes cuenta? </span>
+                <a href="/registro" class="small text-primary text-decoration-none fw-bold">Regístrate aquí</a>
+            </div>
+            <div class="text-center mt-2">
+                <a href="/recuperar" class="small text-muted text-decoration-none">¿Olvidaste tu contraseña?</a>
+            </div>
+        </div>
+
+        <div id="loading-login" class="text-center d-none">
+            <img src="/img/isotipo.png" alt="Cargando..." class="animacion-fija d-block mx-auto mb-4">
+            <h5 class="text-primary fw-bold mb-1">Iniciando sesión...</h5>
+            <p class="small text-muted">Validando credenciales</p>
+        </div>
+    </div>
+    <script src="/js/login.js"></script>
+    <script th:inline="javascript">
+        window.alertaError = [[${alertaError}]];
+        window.alertaSuccess = [[${alertaSuccess}]];
+    </script>
+
+</body>
+</html>

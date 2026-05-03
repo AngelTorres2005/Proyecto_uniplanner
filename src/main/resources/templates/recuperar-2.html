@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UniPlanner - Recuperar Acceso</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="/css/estilos.css">
+  <link rel="icon" type="image/png" href="/img/isotipo.png">
+</head>
+
+<body class="vh-100 d-flex align-items-center justify-content-center bg-light">
+<div class="position-absolute top-0 end-0 p-4" style="z-index: 1050;">
+  <button id="btn-modo-oscuro" class="btn btn-icon border-0 bg-transparent text-secondary fs-4"
+          onclick="cambiarTema()">
+    <i class="bi bi-moon-stars-fill"></i>
+  </button>
+</div>
+
+<div class="card-login p-4 w-100 shadow" style="max-width: 450px;">
+
+  <div id="paso-cambiar">
+    <div class="text-center mb-4">
+      <h4 class="text-primary fw-bold">Nueva Contraseña</h4>
+      <p class="text-secondary small">Crea una clave segura para tu cuenta.</p>
+    </div>
+
+    <form action="/api/recuperar/actualizar" method="POST">
+      <div class="mb-3">
+        <label class="small text-secondary">Nueva Contraseña</label>
+        <input type="password" name="nuevaPassword" class="form-control border-secondary"
+               required minlength="8" placeholder="Mínimo 8 caracteres">
+      </div>
+
+      <div class="mb-4">
+        <label class="small text-secondary">Confirmar Contraseña</label>
+        <input type="password" name="confirmarPassword" class="form-control border-secondary"
+               required minlength="8" placeholder="Repite la contraseña">
+      </div>
+
+      <button type="submit" class="btn btn-success w-100 rounded-pill fw-bold py-2">
+        Actualizar Contraseña
+      </button>
+    </form>
+  </div>
+  <div id="volver-link" class="text-center mt-3">
+    <a href="/login" class="small text-primary text-decoration-none">← Volver al inicio de sesión</a>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script th:inline="javascript">
+  window.alertaError = [[${alertaError}]];
+  window.alertaSuccess = [[${alertaSuccess}]];
+  const temaPrevio = localStorage.getItem('temaUniPlanner') || 'light';
+  document.documentElement.setAttribute('data-bs-theme', temaPrevio);
+</script>
+<script src="/js/login.js"></script>
+</body>
+</html>

@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniPlanner - Menú</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/css/estilos.css">
+    <link rel="icon" type="image/png" href="/img/isotipo.png">
+</head>
+
+<body class="bg-light">
+<header class="top-bar d-flex align-items-center justify-content-between px-4 sticky-top bg-white border-bottom"d
+        style="height: 64px;">
+    <button class="btn btn-white d-md-none border-0 fs-4 me-2" type="button" data-bs-toggle="offcanvas"
+            data-bs-target="#sidebarMovil">
+        <i class="bi bi-list"></i>
+    </button>
+    <div class="d-flex align-items-center">
+        <img src="/img/isotipo.png" alt="UniPlanner" height="35" class="me-3">
+        <h5 class="mb-0 fw-bold text-primary d-none d-sm-block">UniPlanner</h5>
+    </div>
+
+    <div class="d-flex align-items-center gap-2">
+        <span id="fecha-actual" class="me-3 text-secondary small fw-medium d-none d-lg-block"></span>
+
+        <button id="btn-modo-oscuro" class="btn btn-icon border-0 bg-transparent text-secondary fs-5"
+                onclick="cambiarTema()">
+            <i class="bi bi-moon-stars-fill"></i>
+        </button>
+
+        <div class="dropdown d-inline-block">
+            <button class="btn btn-icon border-0 bg-transparent text-secondary fs-5 position-relative"
+                    data-bs-toggle="dropdown">
+                <i class="bi bi-bell-fill"></i>
+                <span
+                        class="position-absolute top-25 start-75 translate-middle p-1 bg-danger border border-light rounded-circle">
+                        <span class="visually-hidden">Nuevas</span>
+                    </span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 rounded-4 p-2" style="width: 300px;">
+                <li>
+                    <h6 class="dropdown-header fw-bold text-dark">Notificaciones</h6>
+                </li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li>
+                    <a class="dropdown-item py-2 px-3 rounded small d-flex align-items-start" href="#">
+                        <i class="bi bi-exclamation-circle-fill text-danger me-2 mt-1"></i>
+                        <div>
+                            <strong class="d-block">PIA de Programación Web</strong>
+                            <span class="text-muted">Vence pronto</span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="dropdown">
+            <button class="btn btn-icon border-0 bg-transparent text-secondary fs-5" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                <i class="bi bi-gear-fill"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3 mt-2" style="width: 280px;">
+                <li>
+                    <h6 class="dropdown-header fw-bold">Configuración General</h6>
+                </li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li>
+                    <h6 class="dropdown-header fw-bold px-3 py-1 small text-muted">Notificaciones</h6>
+                </li>
+                <li>
+                    <div class="dropdown-item d-flex justify-content-between align-items-center"
+                         style="cursor: pointer;" onclick="document.getElementById('checkNotifMovil').click();">
+                        <span><i class="bi bi-phone me-2"></i>Móviles</span>
+                        <div class="form-check mb-0">
+                            <input class="form-check-input border-secondary" type="checkbox" id="checkNotifMovil"
+                                   checked onclick="event.stopPropagation();">
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="dropdown-item d-flex justify-content-between align-items-center"
+                         style="cursor: pointer;" onclick="document.getElementById('checkNotifCorreo').click();">
+                        <span><i class="bi bi-envelope me-2"></i>Correo Electrónico</span>
+                        <div class="form-check mb-0">
+                            <input class="form-check-input border-secondary" type="checkbox" id="checkNotifCorreo"
+                                   checked onclick="event.stopPropagation();">
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item small py-2" href="#"><i class="bi bi-translate me-2"></i>Idioma</a></li>
+                <li><a class="dropdown-item small py-2" href="#"><i class="bi bi-question-circle me-2"></i>Ayuda y
+                    Soporte</a></li>
+            </ul>
+        </div>
+
+        <div class="dropdown ms-2">
+            <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center fw-bold dropdown-toggle shadow-sm transition-transform hover-scale"
+                 style="width: 35px; height: 35px; cursor: pointer;" data-bs-toggle="dropdown" aria-expanded="false"
+                 th:text="${#strings.toUpperCase(#strings.substring(nombre,0,1))}">
+                D
+            </div>
+            <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 rounded-4 mt-2 p-0 overflow-hidden"
+                style="width: 320px;">
+                <li class="bg-primary bg-gradient p-4 text-center position-relative">
+                    <div class="rounded-circle bg-white text-primary d-flex align-items-center justify-content-center fw-bold mx-auto mb-2 shadow-sm"
+                         style="width: 70px; height: 70px; font-size: 2.2rem; border: 4px solid #e0e7ff;"
+                         th:text="${#strings.substring(nombreUsuario,0,1)}">
+                        D
+                    </div>
+                    <h5 class="fw-bold mb-0 text-white" th:text="${nombre}">Nombre Usuario</h5>
+                    <p class="small text-white-50 mb-0">Sesión Activa</p>
+                </li>
+                <li class="p-3 pb-2">
+                    <a href="/perfil"
+                       class="btn btn-outline-primary rounded-pill fw-bold w-100 py-2 d-flex align-items-center justify-content-center">
+                        <i class="bi bi-person-badge me-2 fs-5"></i> Mi Perfil Estudiantil
+                    </a>
+                </li>
+                <li>
+                    <hr class="dropdown-divider mx-3 my-1">
+                </li>
+                <li class="px-2 mt-2">
+                    <a class="dropdown-item py-2 px-3 d-flex align-items-center rounded-3 text-danger item-hover-danger"
+                       href="#" data-bs-toggle="modal" data-bs-target="#modalEliminarCuenta">
+                        <div class="bg-danger bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3"
+                             style="width: 35px; height: 35px;">
+                            <i class="bi bi-trash3-fill"></i>
+                        </div>
+                        <span class="fw-medium small">Eliminar cuenta de UniPlanner</span>
+                    </a>
+                </li>
+                <li>
+                    <hr class="dropdown-divider mx-3 my-2">
+                </li>
+                <li class="px-2 pb-2">
+                    <a class="dropdown-item py-2 px-3 d-flex align-items-center rounded-3 text-dark item-hover-uni"
+                       href="/login">
+                        <i class="bi bi-box-arrow-right fs-5 me-3 text-muted icono-salir"></i>
+                        <span class="fw-bold small">Cerrar Sesión</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>
+<!--Contenedor principal-->
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-3 col-lg-2 d-none d-md-block sidebar p-3 bg-white position-fixed vh-100 border-right">
+            <button class="btn btn-primary w-100 mb-2 rounded-pill shadow-sm py-2 fw-bold" data-bs-toggle="modal"
+                    data-bs-target="#modalTarea">
+                <i class="bi bi-plus-lg me-1"></i> Crear Tarea
+            </button>
+            <button class="btn btn-outline-primary w-100 mb-4 rounded-pill py-2 fw-bold small"
+                    data-bs-toggle="modal" data-bs-target="#modalMateria">
+                <i class="bi bi-journal-plus me-1"></i> Nueva Materia
+            </button>
+
+            <h6 class="small fw-bold text-uppercase text-muted mb-3">Navegación</h6>
+            <ul class="nav flex-column mb-4 gap-2">
+                <li class="nav-item">
+                    <a href="#" class="nav-link text-dark p-0 small" id="nav-inicio"
+                       onclick="cambiarPanel('tareas')">
+                        <i class="bi bi-house-door-fill me-2 text-primary"></i> Inicio
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link text-dark p-0 small" id="nav-horario"
+                       onclick="cambiarPanel('horario')">
+                        <i class="bi bi-calendar3 me-2 text-primary"></i> Mi Horario
+                    </a>
+                </li>
+            </ul>
+
+            <h6 class="small fw-bold text-uppercase text-muted mb-3">Mis Materias</h6>
+            <ul class="nav flex-column mb-4 gap-2" id="listaMaterias">
+
+            </ul>
+            <hr>
+        </nav>
+        <main class="col-12 col-md-6 col-lg-7 offset-md-3 offset-lg-2 px-3 px-md-4 pt-4 mb-5 main-content">
+
+            <div id="panel-tareas">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="mb-0 fw-bold">Tareas de <span th:text="${nombre}">Usuario</span></h2>
+                </div>
+
+                <div id="contenedor-vistas">
+                    <div id="vista-lista" class="list-group">
+
+                    </div>
+
+                    <div id="vista-cards" class="row d-none">
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div
+                                    class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden card-materia position-relative">
+                                <div class="card-header-color bg-proyecto"></div>
+                                <div class="card-body text-center pt-4">
+                                    <h6 class="fw-bold mb-1">Proyecto Integrador</h6>
+                                    <p class="small text-muted mb-0">3 tareas pendientes</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div
+                                    class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden card-materia position-relative">
+                                <div class="card-header-color bg-redes"></div>
+                                <div class="card-body text-center pt-4">
+                                    <h6 class="fw-bold mb-1">Redes Cisco</h6>
+                                    <p class="small text-muted mb-0">1 tarea pendiente</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<!--Contenedor de horarios semanal-->
+            <div id="panel-horario" class="d-none">
+                <h2 class="mb-4 fw-bold">Mi Horario Semanal</h2>
+                <div class="bg-white p-4 rounded-4 shadow-sm border-0">
+                    <div class="table-responsive">
+                        <table class="table table-bordered border-light text-center align-middle m-0"
+                               style="table-layout: fixed; min-width: 600px;">
+                            <thead class="table-light">
+                            <tr>
+                                <th style="width: 80px;" class="text-muted small fw-normal">Hora</th>
+                                <th class="fw-bold text-primary">Lunes</th>
+                                <th class="fw-bold text-primary">Martes</th>
+                                <th class="fw-bold text-primary">Miércoles</th>
+                                <th class="fw-bold text-primary">Jueves</th>
+                                <th class="fw-bold text-primary">Viernes</th>
+                                <th class="fw-bold text-primary">Sábado</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="text-muted small">08:00<br>a<br>09:30</td>
+                                <td class="p-1">
+                                    <div
+                                            class="bloque-horario bg-primary bg-opacity-10 text-primary rounded-3 w-100 p-2">
+                                        <small class="fw-bold lh-sm">Proyecto<br>Integrador</small>
+                                    </div>
+                                </td>
+                                <td></td>
+                                <td class="p-1">
+                                    <div
+                                            class="bloque-horario bg-primary bg-opacity-10 text-primary rounded-3 w-100 p-2">
+                                        <small class="fw-bold lh-sm">Proyecto<br>Integrador</small>
+                                    </div>
+                                </td>
+                                <td></td>
+                                <td class="p-1">
+                                    <div
+                                            class="bloque-horario bg-success bg-opacity-10 text-success rounded-3 w-100 p-2">
+                                        <small class="fw-bold lh-sm">Ética</small>
+                                    </div>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted small">09:30<br>a<br>11:00</td>
+                                <td></td>
+                                <td class="p-1">
+                                    <div
+                                            class="bloque-horario bg-info bg-opacity-10 text-info rounded-3 w-100 p-2">
+                                        <small class="fw-bold lh-sm">Redes<br>Cisco</small>
+                                    </div>
+                                </td>
+                                <td></td>
+                                <td class="p-1">
+                                    <div
+                                            class="bloque-horario bg-info bg-opacity-10 text-info rounded-3 w-100 p-2">
+                                        <small class="fw-bold lh-sm">Redes<br>Cisco</small>
+                                    </div>
+                                </td>
+                                <td></td>
+                                <td class="p-1">
+                                    <div
+                                            class="bloque-horario bg-warning bg-opacity-10 text-warning rounded-3 w-100 p-2">
+                                        <small class="fw-bold lh-sm">Seminario<br>Sistemas</small>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+        <div class="offcanvas offcanvas-start border-0 shadow" tabindex="-1" id="sidebarMovil"
+             style="width: 280px;">
+            <div class="offcanvas-header border-bottom">
+                <div class="d-flex align-items-center">
+                    <img src="/img/imagotipo.png" alt="UniPlanner" height="30" class="me-2">
+                    <h5 class="offcanvas-title fw-bold text-primary">UniPlanner</h5>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body p-4">
+                <button class="btn btn-primary w-100 mb-3 rounded-pill py-2 fw-bold" data-bs-toggle="modal"
+                        data-bs-target="#modalTarea" data-bs-dismiss="offcanvas">
+                    <i class="bi bi-plus-lg me-1"></i> Crear Tarea
+                </button>
+                <button class="btn btn-outline-primary w-100 mb-4 rounded-pill py-2 fw-bold small"
+                        data-bs-toggle="modal" data-bs-target="#modalMateria" data-bs-dismiss="offcanvas">
+                    <i class="bi bi-journal-plus me-1"></i> Nueva Materia
+                </button>
+
+                <h6 class="small fw-bold text-uppercase text-muted mb-3">Navegación</h6>
+                <ul class="nav flex-column mb-4 gap-3">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link text-dark p-0 fw-medium" onclick="cambiarPanel('tareas')"
+                           data-bs-dismiss="offcanvas">
+                            <i class="bi bi-house-door-fill me-2 text-primary"></i> Inicio
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link text-dark p-0 fw-medium" onclick="cambiarPanel('horario')"
+                           data-bs-dismiss="offcanvas">
+                            <i class="bi bi-calendar3 me-2 text-primary"></i> Mi Horario
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <aside class="col-12 col-md-3 p-4 border-start bg-white sidebar-derecha-fija">
+            <div class="mini-calendar border-0 p-0 mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h6 id="mes-nombre" class="fw-bold mb-0 text-dark small text-uppercase"></h6>
+                    <div class="btn-group">
+                        <button onclick="cambiarMes(-1)" class="btn btn-sm text-secondary p-1"><i
+                                class="bi bi-chevron-left"></i></button>
+                        <button onclick="cambiarMes(1)" class="btn btn-sm text-secondary p-1"><i
+                                class="bi bi-chevron-right"></i></button>
+                    </div>
+                </div>
+                <div class="calendar-grid small text-muted mb-2 text-center"
+                     style="display: grid; grid-template-columns: repeat(7, 1fr);">
+                    <div>D</div>
+                    <div>L</div>
+                    <div>M</div>
+                    <div>M</div>
+                    <div>J</div>
+                    <div>V</div>
+                    <div>S</div>
+                </div>
+                <div id="calendario-dias" class="calendar-grid fw-medium text-center"
+                     style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px;"></div>
+            </div>
+
+            <hr class="my-4 text-muted opacity-25">
+
+            <div class="mb-4">
+                <h6 class="small fw-bold text-uppercase text-muted mb-3"
+                    style="font-size: 0.75rem; letter-spacing: 1px;">
+                    <i class="bi bi-check-circle-fill text-success me-2"></i>Tareas Completadas
+                </h6>
+                <div class="list-group list-group-flush" id="contenedor-tareas-pendientes">
+                    
+                </div>
+            </div>
+
+            <div class="extras-google-style" id="contenedor-tareasProximas">
+                <h6 class="small fw-bold text-uppercase text-muted mb-3"
+                    style="font-size: 0.75rem; letter-spacing: 1px;">Próximos a vencer</h6>
+            </div>
+        </aside>
+    </div>
+</div>
+<!--Modales-->
+<div class="modal fade" id="modalTarea" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow-lg border-0 rounded-4">
+            <div id="form-tarea-container">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold text-primary"><i class="bi bi-plus-circle me-2"></i>Nueva Tarea</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form-nueva-tarea" action="/crearTarea" method="POST">
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-body">Título de la tarea</label>
+                            <input type="text" class="form-control border-secondary-subtle" placeholder="Ej: Actividad 3.2 Anteproyecto" required name="titulo">
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-body">Prioridad</label>
+                                <select class="form-select border-secondary-subtle" name="prioridad">
+                                    <option value="1">Alta</option>
+                                    <option value="2">Media</option>
+                                    <option value="3">Baja</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-body">Fecha de entrega</label>
+                                <input type="date" class="form-control border-secondary-subtle" required name="fechaEntrega">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-body">Materia</label>
+                            <select class="form-select border-secondary-subtle" id="selectMaterias" name="materia">
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-body">Comentarios / Notas</label>
+                            <textarea class="form-control border-secondary-subtle" rows="2" placeholder="Añade una nota..." name="descripcion"></textarea>
+                        </div>
+                        <div class="modal-footer border-0">
+                            <button type="button" class="btn btn-secondary opacity-50 rounded-pill px-4" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary rounded-pill px-4">Guardar Tarea</button>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalEditarTarea" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow-lg border-0 rounded-4">
+            <div id="form-editartarea-container">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold text-primary"><i class="bi bi-plus-circle me-2"></i>Actualizar Tarea</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form-editar-tarea" action="/actualizarTarea" method="POST">
+                        <input type="hidden" name="id_tarea" id="id_tarea">
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-body">Título de la tarea</label>
+                            <input type="text" class="form-control border-secondary-subtle" placeholder="Ej: Actividad 3.2 Anteproyecto" required name="titulo" id="titulo">
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-body">Prioridad</label>
+                                <select class="form-select border-secondary-subtle" name="prioridad" id="prioridad">
+                                    <option value="1">Alta</option>
+                                    <option value="2">Media</option>
+                                    <option value="3">Baja</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-body">Fecha de entrega</label>
+                                <input type="date" class="form-control border-secondary-subtle" required name="fechaEntrega" id="fechaEntrega">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-body">Materia</label>
+                            <select class="form-select border-secondary-subtle" id="materia" name="materia">
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-body">Comentarios / Notas</label>
+                            <textarea class="form-control border-secondary-subtle" rows="2" placeholder="Añade una nota..." name="descripcion" id="descripcion"></textarea>
+                        </div>
+                        <div class="modal-footer border-0">
+                            <button type="button" class="btn btn-secondary opacity-50 rounded-pill px-4" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary rounded-pill px-4">Actualizar Tarea</button>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalMateria" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow-lg border-0 rounded-4">
+            <div class="modal-header border-0">
+                <h5 class="modal-title fw-bold text-primary d-flex align-items-center">
+                    <i class="bi bi-journal-plus me-2 fs-4"></i> Añadir Materia
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body pt-0">
+                <form id="formNuevaMateria" action="/agregarMateria" method="POST">
+                    <div class="row g-3 mb-4">
+                        <div class="col-9">
+                            <label class="form-label small fw-bold text-body">Nombre de la materia</label>
+                            <input type="text" name="nombreMateria" class="form-control bg-body-tertiary border-0 py-2" placeholder="Ej: Programación Web" required>
+                        </div>
+                        <div class="col-3">
+                            <label class="form-label small fw-bold text-body">Color</label>
+                            <input type="color" name="colorMateria" class="form-control form-control-color w-100 border-0 bg-body-tertiary p-1" style="height: 42px;" value="#2563eb">
+                        </div>
+                    </div>
+                    <label class="form-label small fw-bold text-body mb-3"><i class="bi bi-clock me-1"></i> Horarios de Clase</label>
+                    <div id="contenedorHorarios">
+                        <div class="row g-2 mb-3 fila-horario align-items-center">
+                            <div class="col-4">
+                                <select name="dia[]" class="form-select bg-body-tertiary border-0 py-2">
+                                    <option value="Lunes">Lunes</option>
+                                    <option value="Martes">Martes</option>
+                                    <option value="Miércoles">Miércoles</option>
+                                    <option value="Jueves">Jueves</option>
+                                    <option value="Viernes">Viernes</option>
+                                    <option value="Sábado">Sábado</option>
+                                </select>
+                            </div>
+                            <div class="col-3">
+                                <input type="time" name="horaInicio[]" class="form-control bg-body-tertiary border-0 py-2" required>
+                            </div>
+                            <div class="col-3">
+                                <input type="time" name="horaFinal[]" class="form-control bg-body-tertiary border-0 py-2" required>
+                            </div>
+                            <div class="col-2 text-end">
+                                <button type="button" class="btn btn-outline-danger border-1 py-2 w-100" onclick="eliminarFila(this)">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-outline-secondary w-100 rounded-3 py-2 fw-bold mb-4" onclick="agregarFilaHorario()">
+                        <i class="bi bi-plus-circle me-1"></i> Agregar otro horario
+                    </button>
+                    <div class="modal-footer border-0 justify-content-end gap-2 pb-4">
+                        <button type="button" class="btn btn-secondary opacity-50 rounded-pill px-5 fw-bold" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary rounded-pill px-5 fw-bold">Guardar Materia</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalEntregarTarea" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content shadow-lg border-0 rounded-4">
+            <div class="modal-body text-center p-4">
+                <i class="bi bi-check-circle-fill text-success" style="font-size: 3rem;"></i>
+                <input type="hidden" id="id_tareaCompletada">
+                <h5 class="fw-bold mt-3 text-body">¿Entregar Tarea?</h5>
+                <p class="small text-muted mb-4">¿Seguro que deseas marcar "<span id="nombre-tarea-entregar"></span>" como completada?</p>
+                <div class="d-flex justify-content-center gap-2">
+                    <button type="button" class="btn btn-secondary opacity-50 rounded-pill px-4" data-bs-dismiss="modal" onclick="cancelarEntrega()">Cancelar</button>
+                    <button type="button" class="btn btn-success rounded-pill px-4" onclick="completarEntrega()">Sí, entregar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalEditarMateria" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow-lg border-0 rounded-4">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold text-primary"><i class="bi bi-pencil-square me-2"></i>Editar Materia</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/editarMateria" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold text-body">Nombre de la materia</label>
+                        <input type="hidden" name="id_materia" id="id_materia"></input>
+                        <input type="text" class="form-control border-secondary-subtle" id="input-editar-nombre" name="nombre">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold text-body">Color de identificación</label>
+                        <input type="color" class="form-control form-control-color w-100 border-secondary-subtle" name="color" id="input-editar-color" value="#0d6efd">
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-secondary opacity-50 rounded-pill px-4" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary rounded-pill px-4">Guardar Cambios</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalEliminarMateria" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content shadow-lg border-0 rounded-4">
+            <div class="modal-body text-center p-4">
+                <i class="bi bi-exclamation-triangle-fill text-warning" style="font-size: 3rem;"></i>
+                <h5 class="fw-bold mt-3 text-body">¿Eliminar <span id="nombre-materia-eliminar"></span>?</h5>
+                <p class="small text-muted mb-4">Se eliminará la materia y todas las tareas asociadas. Esta acción no se puede deshacer.</p>
+                <div class="d-flex justify-content-center gap-2">
+                    <button type="button" class="btn btn-secondary opacity-50 rounded-pill px-4" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger rounded-pill px-4">Sí, eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalDetalleTarea" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow-lg border-0 rounded-4">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold text-primary">
+                    <i class="bi bi-journal-text me-2"></i>Detalles de la Tarea
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div class="mb-4">
+                    <h3 class="fw-bold mb-1" id="det-titulo">Título de la Tarea</h3>
+                    <span class="badge rounded-pill" id="det-prioridad">Prioridad</span>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-6">
+                        <label class="text-muted small d-block"><i class="bi bi-book me-1"></i> Materia</label>
+                        <p class="fw-bold mb-0" id="det-materia">Nombre Materia</p>
+                    </div>
+                    <div class="col-6">
+                        <label class="text-muted small d-block"><i class="bi bi-calendar-event me-1"></i> Fecha Entrega</label>
+                        <p class="fw-bold mb-0" id="det-fecha">DD/MM/AAAA</p>
+                    </div>
+                    <div class="col-12">
+                        <hr class="my-2 opacity-25">
+                        <label class="text-muted small d-block"><i class="bi bi-card-text me-1"></i> Descripción / Notas</label>
+                        <p class="text-body bg-light p-3 rounded-3 mt-2" id="det-descripcion" style="min-height: 80px;">
+                            Aquí va la descripción...
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script th:inline="javascript">
+    window.alertaError = [[${alertaError}]];
+    window.alertaSuccess = [[${alertaSuccess}]];
+    const temaPrevio = localStorage.getItem('temaUniPlanner') || 'light';
+    document.documentElement.setAttribute('data-bs-theme', temaPrevio);
+</script>
+<script src="/js/index.js"></script>
+<script>
+    const temaGuardado = localStorage.getItem('temaUniPlanner') || 'light';
+    document.documentElement.setAttribute('data-bs-theme', temaGuardado);
+</script>
+</body>
+
+</html>
