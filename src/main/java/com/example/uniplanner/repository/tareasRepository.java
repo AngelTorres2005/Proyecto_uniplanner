@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,4 +32,7 @@ public interface tareasRepository extends JpaRepository<tareas, Integer> {
             "ORDER BY t.fecha_entrega ASC LIMIT 3",
             nativeQuery = true)
     List<tareas> buscar3TareasAVencer(@Param("id") Integer id);
+
+    @Query("SELECT t FROM tareas t WHERE t.fecha_entrega = :fecha AND t.estatus IS NULL")
+    List<tareas> buscarTareasParaRecordatorio(@Param("fecha") LocalDate fecha);
 }
