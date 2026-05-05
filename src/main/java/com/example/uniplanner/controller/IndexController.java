@@ -292,4 +292,12 @@ public class IndexController {
         }
     }
 
+    @GetMapping("/tareasRecordatorio")
+    @ResponseBody
+    public List<tareas> tareasRecordatorio(@AuthenticationPrincipal CustomUserDetails userDetails){
+        LocalDate manana = LocalDate.now().plusDays(1);
+        Integer id = userDetails.getIdUsuario();
+        return tareasRepository.buscarTareasParaRecordatorioID(manana, id);
+    }
+
 }//fin de la clase indexController

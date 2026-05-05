@@ -35,4 +35,7 @@ public interface tareasRepository extends JpaRepository<tareas, Integer> {
 
     @Query("SELECT t FROM tareas t WHERE t.fecha_entrega = :fecha AND t.estatus IS NULL")
     List<tareas> buscarTareasParaRecordatorio(@Param("fecha") LocalDate fecha);
+
+    @Query("SELECT t FROM tareas t WHERE t.fecha_entrega = :fecha AND t.usuario.id_usuario = :id AND t.estatus IS NULL")
+    List<tareas> buscarTareasParaRecordatorioID(@Param("fecha") LocalDate fecha, @Param("id") Integer id);
 }

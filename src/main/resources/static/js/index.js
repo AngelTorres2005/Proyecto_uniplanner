@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
     ultimas2Tareas();
     tareasProximasAVencer();
     materiasHorarioContainer();
+    tareasNotificaciones();
 })
 
 const temaGuardado = localStorage.getItem('temaUniPlanner') || 'light';
@@ -366,6 +367,28 @@ async function materiasHorarioContainer() {
             position: 'top'
         });
     }
+}
+async function tareasNotificaciones(){
+    try{
+        const response = await fetch("/tareasRecordatorio")
+        const tareas = await response.json();
+
+        const contenedor = document.getElementById("contenedor-notificaciones");
+        contenedor.innerHTML = "";
+        tareas.forEach(tarea =>{
+            const li = document.createElement("li");
+            li.innerHTML = `
+            <a class="dropdown-item py-2 px-3 rounded small d-flex align-items-start">
+                        <i class="bi bi-exclamation-circle-fill text-danger me-2 mt-1"></i>
+                        <div>
+                            <strong class="d-block text-wrap" >${tarea.titulo} de ${tarea.materia.nombre}</strong>
+                            <span class="text-muted text-wrap">Vence el ${tarea.fecha_entrega}</span>
+                        </div>
+                    </a>`
+            contenedor.appendChild(li);
+        })
+
+    }catch(error){console.error(error)}
 }
 ////////////////////////////////////////////////////FRONTEND///////////////////////////////////////////////////////////////////////
 
