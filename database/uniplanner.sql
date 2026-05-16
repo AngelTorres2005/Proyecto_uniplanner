@@ -12,7 +12,6 @@ CREATE TABLE IF NOT EXISTS academico.horarios
     hora_final time(6) without time zone,
     CONSTRAINT horarios_pkey PRIMARY KEY (id_horario)
     );
-
 CREATE TABLE IF NOT EXISTS academico.materias
 (
     id_materia integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
